@@ -4,7 +4,10 @@
       <app-bot-message [text]="'Hi there, how can I help u? 🙂'"/>
       @for (message of messages(); track $index) {
         @if (message.isGpt) {
-          <app-bot-message [text]="message.text"/>
+          <app-gpt-orthography-message
+            [text]="message.text"
+            [errors]="message.info!.errors"
+            [userScore]="message.info!.userScore"/>
         } @else {
           <app-user-message [text]="message.text"/>
         }
@@ -16,17 +19,8 @@
     </div>
   </div>
   <!-- Message Box -->
+  <app-text-entry
+    (onMessage)="handleTextEntry($event)"
+    [placeholder]="'Input here your text-entry...'"/>
 
-  <!--  <app-text-entry-->
-  <!--    (onMessage)="handleTextEntry($event)"-->
-  <!--    [placeholder]="'Input here your text-entry...'" />-->
-
-  <!--  <app-text-file-entry-->
-  <!--    (onMessage)="handleTextAndFileEntry($event)"-->
-  <!--    [placeholder]="'Input here...'"/>-->
-
-  <app-text-option-entry
-    (onMessage)="handleTextAndSelectedOptEntry($event)"
-    [options]="[{id: '1', text: 'Option 1'}, {id: '2', text: 'Option 2'}]"
-    [placeholder]="'Input here...'"/>
 </div>

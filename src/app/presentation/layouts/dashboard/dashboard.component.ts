@@ -1,8 +1,8 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {Route, RouterModule} from "@angular/router";
-import {SidebarMenuItemComponent} from "../../components/sidebar-menu-item/sidebar-menu-item.component";
 import {routes} from "../../../app.routes";
+import { SidebarMenuItemComponent } from '@components/index';
+import {Route, RouterOutlet} from "@angular/router";
 
 
 /*
@@ -14,7 +14,7 @@ import {routes} from "../../../app.routes";
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, SidebarMenuItemComponent],
+  imports: [CommonModule, SidebarMenuItemComponent, RouterOutlet],
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProsConsComponent } from './pros-cons.component';
+import ProsConsComponent from './pros-cons.component';
 
 describe('ProsConsComponent', () => {
   let component: ProsConsComponent;
@@ -11,7 +11,7 @@ describe('ProsConsComponent', () => {
       imports: [ProsConsComponent]
     })
     .compileComponents();
-    
+
     fixture = TestBed.createComponent(ProsConsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

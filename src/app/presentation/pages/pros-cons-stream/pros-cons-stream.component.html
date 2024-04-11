@@ -1,1 +1,23 @@
-<p>pros-cons-stream works!</p>
+<div class="chat-container">
+  <div class="chat-messages">
+    <div class="grid gap-y-2">
+      <app-bot-message [text]="'What would you like to analyze? (I will answer really quick)'"/>
+      @for (message of messages(); track message.text) {
+        @if (message.isGpt) {
+          <app-bot-message [text]="message.text"/>
+        } @else {
+          <app-user-message [text]="message.text"/>
+        }
+      }
+
+      @if (isLoading()) {
+        <app-typing-loader/>
+      }
+    </div>
+  </div>
+  <!-- Message Box -->
+
+    <app-text-entry
+      (onMessage)="handleTextEntry($event)"
+      [placeholder]="'Input here your text-entry...'" />
+</div>
