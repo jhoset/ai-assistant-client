@@ -1,1 +1,24 @@
-<p>text-to-audio works!</p>
+<div class="chat-container">
+  <div class="chat-messages">
+    <div class="grid gap-y-2">
+      <app-bot-message [text]="'Hi there, what would u like to convert to audio? 🙂'"/>
+      @for (message of messages(); track $index) {
+        @if (message.isGpt) {
+          <app-bot-message [text]="message.text" [audioUrl]="message.audioUrl" />
+        } @else {
+          <app-user-message [text]="message.text"/>
+        }
+      }
+
+      @if (isLoading()) {
+        <app-typing-loader/>
+      }
+    </div>
+  </div>
+  <!-- Message Box -->
+
+  <app-text-option-entry
+    (onMessage)="handleTextAndSelectedOptEntry($event)"
+    [options]="voices()"
+    [placeholder]="'Select voice...'"/>
+</div>

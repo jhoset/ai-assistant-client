@@ -1,1 +1,22 @@
-<p>audio-to-text works!</p>
+<div class="chat-container">
+  <div class="chat-messages">
+    <div class="grid grid-cols-12 gap-y-2">
+      <app-bot-message class="col-span-9" [text]="'Hi there, how can I help u? 🙂'"/>
+      @for (message of messages(); track $index) {
+        @if (message.isGpt) {
+          <app-bot-message class="col-span-9" [text]="message.text"/>
+        } @else {
+          <app-user-message class="col-start-3 col-span-9" [text]="message.text"/>
+        }
+      }
+
+      @if (isLoading()) {
+        <app-typing-loader class="col-span-9"/>
+      }
+    </div>
+  </div>
+  <!-- Message Box -->
+  <app-text-file-entry
+    (onMessage)="handleTextAndFileEntry($event)"
+    [placeholder]="'Input here...'"/>
+</div>

@@ -11,4 +11,5 @@ import {MarkdownComponent} from "ngx-markdown";
 })
 export class BotMessageComponent {
   @Input({required: true}) text!: string;
+  @Input() audioUrl?: string;
 }

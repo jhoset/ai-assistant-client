@@ -5,5 +5,6 @@ export interface IMessage {
     userScore: number;
     errors: string[];
     message: string;
-  }
+  },
+  audioUrl?: string;
 }
