@@ -8,9 +8,11 @@ import {TypingLoaderComponent} from "@components/typing-loader/typing-loader.com
 import {UserMessageComponent} from "@components/chat-bubbles/user-message/user-message.component";
 import {IMessage} from "@interfaces/message.interface";
 import {OpenAiService} from "../../services/open-ai.service";
+import {ITextEntryEvent} from "@components/data-entries/text-entry/text-entry.component";
+import {ITextAndFileEntryEvent} from "@components/data-entries/text-file-entry/text-file-entry.component";
 
 @Component({
-  selector: 'app-translate',
+  selector: 'app-translate-stream',
   standalone: true,
   imports: [
     BotMessageComponent,
@@ -18,13 +20,14 @@ import {OpenAiService} from "../../services/open-ai.service";
     TypingLoaderComponent,
     UserMessageComponent
   ],
-  templateUrl: './translate.component.html',
+  templateUrl: './translate-stream.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export default class TranslateComponent {
+export default class TranslateStreamComponent {
   public messages = signal<IMessage[]>([]);
   public isLoading = signal(false);
   public openAiService = inject(OpenAiService);
+  public abortSignal = new AbortController();
 
   public languages = signal([
     {id: 'alemán', text: 'Alemán'},
@@ -39,19 +42,27 @@ export default class TranslateComponent {
     {id: 'ruso', text: 'Ruso'},
   ])
 
-  public handleTextAndSelectedOptEntry({prompt, option}: ITextAndSelectedOptEntryEvent) {
-    this.isLoading.set(true);
+  public async handleTextAndSelectedOptEntry({prompt, option}: ITextAndSelectedOptEntryEvent) {
+    this.abortSignal.abort();
+    this.abortSignal = new AbortController();
+
     this.messages.update((prev) => [
       ...prev,
       {isGpt: false, text: `Translate to ${option}: ${prompt}`}
-    ])
+    ]);
+    this.isLoading.set(true);
+    const stream = this.openAiService.translateStream(prompt, option, this.abortSignal.signal);
+    this.isLoading.set(false);
+    for await (const text of stream) {
+      this.handleStreamResponse(text);
+    }
+  }
 
-    this.openAiService.translate(prompt, option).subscribe(result => {
-      this.isLoading.set(false);
-      this.messages.update((prev) => [
-        ...prev,
-        {isGpt: true, text: result.content}
-      ])
-    })
+  private handleStreamResponse(message: string) {
+    if (this.messages().at(-1)?.isGpt) {
+      this.messages().pop();
+    }
+    const messages = this.messages();
+    this.messages.set([...messages, {isGpt: true, text: message}])
   }
 }

@@ -35,7 +35,7 @@ export default class ProsConsStreamComponent {
     this.abortSignal = new AbortController();
 
     this.messages.update((prev) => [
-      ...prev, {isGpt: false, text: prompt}, {isGpt: false, text: '...'}])
+      ...prev, {isGpt: false, text: prompt}, {isGpt: true, text: '...'}])
     this.isLoading.set(true)
     const stream = this.openAiService.analyzeProsConsStream(prompt, this.abortSignal.signal);
     this.isLoading.set(false);

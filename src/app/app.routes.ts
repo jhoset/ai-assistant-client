@@ -43,6 +43,15 @@ export const routes: Routes = [
         }
       },
       {
+        path: 'translate-stream',
+        loadComponent: () => import('./presentation/pages/translate-stream/translate-stream.component'),
+        data: {
+          icon: 'fa-solid fa-water',
+          title: 'Translate Stream',
+          description: 'Translate to other languages'
+        }
+      },
+      {
         path: 'audio-to-text-entry',
         loadComponent: () => import('./presentation/pages/audio-to-text/audio-to-text.component'),
         data: {

@@ -7,8 +7,8 @@ interface Option {
 }
 
 export interface ITextAndSelectedOptEntryEvent {
-  prompt?: string;
-  option?: string;
+  prompt: string;
+  option: string;
 }
 
 @Component({

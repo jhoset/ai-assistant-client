@@ -1,8 +1,8 @@
 <div class="chat-container">
   <div class="chat-messages">
     <div class="grid gap-y-2">
-      <app-bot-message [text]="'Hi there, how can I help u? 🙂'"/>
-      @for (message of messages(); track $index) {
+      <app-bot-message [text]="'Hi what would you like to translate? 🙂'"/>
+      @for (message of messages(); track message.text) {
         @if (message.isGpt) {
           <app-bot-message [text]="message.text"/>
         } @else {
@@ -16,7 +16,6 @@
     </div>
   </div>
   <!-- Message Box -->
-
   <app-text-option-entry
     (onMessage)="handleTextAndSelectedOptEntry($event)"
     [options]="languages()"
