@@ -9,3 +9,4 @@ export * from "./data-entries/text-file-entry/text-file-entry.component";
 export * from "./data-entries/text-option-entry/text-option-entry.component";
 
 export * from "./typing-loader/typing-loader.component";
+export * from "./chat-bubbles/gpt-message-editable/gpt-message-editable.component";

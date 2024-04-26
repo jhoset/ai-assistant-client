@@ -79,8 +79,8 @@ export const routes: Routes = [
         }
       },
       {
-        path: 'image-tunning',
-        loadComponent: () => import('./presentation/pages/image-tunning/image-tunning.component'),
+        path: 'image-tuning',
+        loadComponent: () => import('./presentation/pages/image-tuning/image-tuning.component'),
         data: {
           icon: 'fa-solid fa-wand-magic',
           title: 'Edit image',

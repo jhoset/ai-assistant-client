@@ -1,1 +1,24 @@
-<p>image-generation works!</p>
+<div class="chat-container">
+  <div class="chat-messages">
+    <div class="grid gap-y-2">
+      <app-bot-message [text]="'Hi there, would you like me to generate images? 🙂'"/>
+      @for (message of messages(); track $index) {
+        @if (message.isGpt) {
+          <app-bot-message [text]="message.text" [imageInfo]="message.imageInfo"/>
+        } @else {
+          <app-user-message [text]="message.text"/>
+        }
+      }
+
+      @if (isLoading()) {
+        <app-typing-loader/>
+      }
+    </div>
+  </div>
+  <!-- Message Box -->
+
+    <app-text-entry
+      (onMessage)="handleTextEntry($event)"
+      [placeholder]="'Input here your text-entry...'" />
+
+</div>
