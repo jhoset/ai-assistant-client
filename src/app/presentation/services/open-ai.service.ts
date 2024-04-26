@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {from} from "rxjs";
+import {from, Observable, of, tap} from "rxjs";
 import {
-  audioToTextUseCase, imageGenerationUseCase, imageVariationUseCase,
-  orthographyUseCase,
+  audioToTextUseCase, createThreadUseCase, imageGenerationUseCase, imageVariationUseCase,
+  orthographyUseCase, postQuestionUseCase,
   prosConsStreamUseCase,
   prosConsUseCase, textToAudioUseCase,
   translateStreamUseCase,
@@ -48,6 +48,20 @@ export class OpenAiService {
 
   public generateVariation(originalImage: string) {
     return from(imageVariationUseCase(originalImage));
+  }
+
+  public createThread(): Observable<string> {
+    if (localStorage.getItem('thread')) {
+      return of(localStorage.getItem('thread')!);
+    }
+    return from(createThreadUseCase())
+      .pipe(tap((thread) => {
+        localStorage.setItem('thread', thread);
+      }))
+  }
+
+  public postQuestion(threadId: string, question: string) {
+    return from(postQuestionUseCase(threadId, question));
   }
 
 }

@@ -1,5 +1,8 @@
 # ZeroGpt
 
+![imagen](https://github.com/jhoset/ai-assistant-client/assets/29497145/5bb97d57-741a-4939-b2a8-cab807fb6239)
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.2.
 
 ## Development server
